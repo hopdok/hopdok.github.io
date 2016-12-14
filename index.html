@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>메뉴리스트</title>
+    <link rel="stylesheet" type="text/css" href="/front/css/ui.beautynus.css">
+    <script src="/front/js/polyfill.js"></script>
+    <script src="/front/js/jquery.js"></script>
+    <script src="/front/js/ui.beautynus.js"></script>
+    <style>
+    h1 {font-size: 2em; font-family: dotum; margin-bottom: 30px;}
+    #wrap {text-align: center; margin-top: 50px;}
+    .paragraph p {font-size: 1.3em;}
+    .paragraph + .paragraph{margin-top: 20px;}
+    video {
+        max-width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+
+<!-- <iframe width="640" height="360" src="http://play.wecandeo.com/video/v/?key=BOKNS9AQWrHVueMRDDUUFY7Pwlv2KLJisPnMmy64bYNumBrcol7ipF7wieie" frameborder="0" allowfullscreen></iframe> -->
+
+<a href="https://api.wecandeo.com/video/default/BOKNS9AQWrHVueMRDDUUFY7Pwlv2KLJisPnMmy64bYNvRipayEqLQvDIMOwkBTzaHclwAkyx5eOcyD3sn3bwAfJgieie.mp4">비디오</a>
+
+<video webkit-playsinline playsinline src="https://api.wecandeo.com/video/default/BOKNS9AQWrHVueMRDDUUFY7Pwlv2KLJisPnMmy64bYNvRipayEqLQvDIMOwkBTzaHclwAkyx5eOcyD3sn3bwAfJgieie.mp4" type="video/mp4">
+    <source src="https://api.wecandeo.com/video/default/BOKNS9AQWrHVueMRDDUUFY7Pwlv2KLJisPnMmy64bYNvRipayEqLQvDIMOwkBTzaHclwAkyx5eOcyD3sn3bwAfJgieie.mp4" type="video/mp4">
+</video>
+<!-- <video webkit-playsinline playsinline src="/front/images/temp/test-video-low.mp4" type="video/mp4">
+    <source src="/front/images/temp/test-video-low.mp4" type="video/mp4">
+</video> -->
+<button type="button" class="wow">플레이</button>
+<script>
+var video = document.querySelector('video');
+
+// 1.
+video.addEventListener('click', requestFullScreen);
+
+video.addEventListener('error', function(){
+    console.log('error');
+}, false);
+
+// 2.
+function requestFullScreen() {
+    video.removeEventListener('click', requestFullScreen);
+    video.webkitRequestFullScreen();
+}
+// 3.
+function reloadVideo() {
+    var ext = video.src.substr( video.src.lastIndexOf('.') ).toLowerCase();
+    if( ext == '.m3u8' ) {
+        video.load();
+        video.play();
+    }
+}
+// 4.
+video.addEventListener('webkitbeginfullscreen', reloadVideo, false);
+video.addEventListener('webkitendfullscreen', reloadVideo, false);
+// 5.
+video.addEventListener('webkitfullscreenchange', reloadVideo, false);
+
+// function createVideo () {
+//     var v = document.createElement('video'),
+//         s = document.createElement('source'),
+//         src = '//api.wecandeo.com/video/default/BOKNS9AQWrHVueMRDDUUFY7Pwlv2KLJisPnMmy64bYNvRipayEqLQvDIMOwkBTzaHclwAkyx5eOcyD3sn3bwAfJgieie.mp4',
+//         type = "video/mp4";
+//     v.src = src;
+//     v.type = type;
+//     s.src = src;
+//     s.type = type;
+//     v.appendChild( s );
+//     document.body.appendChild( v );
+
+//     methodCheck( document.querySelector('video') );
+// }
+
+// function removeVideo () {
+//     document.body.removeChild ( document.querySelector('video') );
+// }
+
+// function methodCheck(v) {
+
+
+//     v.load();
+
+//     console.log('===== canPlayType ==', v.canPlayType());
+    
+//     v.onerror = function(){
+//         console.log('error');
+//     };
+
+//     v.onplay = function(){
+//         console.log('===== onplay =====')
+//         console.log('buffered', v.buffered);
+//     };
+
+//     v.oncancel = function(){
+//         console.log('===== oncancel =====');
+//     };
+
+//     v.onloadstart = function() {
+//         console.log('===== onloadstart =====', v, v.readyState);
+//         console.log(v.buffered);
+//     };
+
+//     v.onload = function() {
+//         console.log('===== onload =====', v.networkState, v.readyState);
+//         console.log(v.buffered);
+//     };
+//     v.onloadeddata = function() {
+//         console.log('===== loadeddata =====', v.networkState, v.readyState);
+//     };
+//     v.onloadedmetadata = function() {
+//         console.log('===== onloadedmetadata =====', v.networkState, v.readyState);
+//     };
+// }
+
+
+
+
+$('.wow').on('click', function(){
+    document.querySelector('video').play();
+})
+</script>
+
+<div id="wrap">
+    <h1>웹폰트 비교 테스트</h1>
+    <div class="paragraph">
+        <p style="font-family: 'AritaBold';">아리따 굵은 서체</p>
+        <p style="font-family: 'AritaBold';">Arita Bold Font</p>
+    </div>
+
+    <div class="paragraph">
+        <p style="font-family: 'AritaMedium';">아리따 보통 서체</p>
+        <p style="font-family: 'AritaMedium';">Arita Medium Font</p>
+    </div>
+
+    <div class="paragraph">
+        <p style="font-family: 'Arita-buriMedium';">아리따 부리 보통 서체</p>
+        <p style="font-family: 'Arita-buriMedium';">Arita-buri Medium</p>
+    </div>
+    
+    <h1>SELECT TAG TEST</h1>
+
+    <select name="">
+        <option value="">선택하세요</option>
+        <option value="">첫번째</option>
+        <option value="">두번째</option>
+        <option value="">세번째</option>
+        <option value="">네번째</option>
+    </select>
+
+    <div class="clearfix select-wrap">
+        <select name="" id="" class="local-store fr">
+            <option value="">전체</option>
+            <option value="">경기</option>
+            <option value="">서울</option>
+            <option value="">강원</option>
+            <option value="">인천</option>
+        </select>
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

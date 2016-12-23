@@ -3,7 +3,7 @@
 	<head>
 	<script src="/front/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript">
-	//½ºÅ°¸¶¸¦ Á¤ÀÇ ÇØµÒ
+	//ìŠ¤í‚¤ë§ˆë¥¼ ì •ì˜ í•´ë‘ 
 	var schema = {
 		version:1,
 		autoSchema:false,
@@ -19,7 +19,7 @@
 		}]
 	};
 	 
-	var db = new db.Storage('indexedDb', schema);
+	var db = indexedDB.open('indexedDb', schema);
 	 
 	 
 	var addItem = function () {
@@ -40,7 +40,7 @@
 		$("input[name=memo]").val("");
 	};
 	 
-	//»èÁ¦
+	//ì‚­ì œ
 	var deleteItem = function (id) {
 	  db.remove('indexedDb', id).fail(function(e) {
 	    console.error(e);
@@ -50,7 +50,7 @@
 	};
 	 
 	 
-	//ÀüÃ¼ °¡Á®¿À±â
+	//ì „ì²´ ê°€ì ¸ì˜¤ê¸°
 	var getAllItems = function () {
 	  $("#list li").remove();
 	  var df = db.values('indexedDb');
@@ -68,7 +68,7 @@
 	  });
 	};
 	 
-	//È­¸é¿¡ ±×¸®±â
+	//í™”ë©´ì— ê·¸ë¦¬ê¸°
 	var renderList = function (item) {
 	  var list = document.getElementById("list");
 	  var li = document.createElement("li");

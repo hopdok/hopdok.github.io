@@ -1,113 +1,179 @@
-<!doctype html>
-<html lang="ko">
-	<head>
-	<script src="/front/js/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript">
-	//스키마를 정의 해둠
-	var schema = {
-		version:1,
-		autoSchema:false,
-		stores:[{
-			name:"indexedDb",
-			keyPath:"id",
-			autoIncrement:true,
-			indexes:[
-				{name:'title'},
-				{name:'memo'},
-				{name:'date'}
-			]
-		}]
-	};
-	 
-	var db = indexedDB.open('indexedDb', schema);
-	 
-	 
-	var addItem = function () {
-	 
-		var data = {
-			"title":$("input[name=title]").val(),
-			"memo":$("input[name=memo]").val(),
-			"date":Date()
-		};
-	 
-		db.put('indexedDb', data).fail(function(e) {
-			console.error(e);
-		});
-	 
-		getAllItems();
-	 
-		$("input[name=title]").val("");
-		$("input[name=memo]").val("");
-	};
-	 
-	//삭제
-	var deleteItem = function (id) {
-	  db.remove('indexedDb', id).fail(function(e) {
-	    console.error(e);
-	  });
-	 
-	  getAllItems();
-	};
-	 
-	 
-	//전체 가져오기
-	var getAllItems = function () {
-	  $("#list li").remove();
-	  var df = db.values('indexedDb');
-	 
-	  df.done(function (items) {
-	    var n = items.length;
-	    for (var i = 0; i < n; i++) {
-	      console.log(items[i]);
-		  renderList(items[i]);
-		}
-	  });
-	 
-	  df.fail(function (e) {
-	    console.error(e);
-	  });
-	};
-	 
-	//화면에 그리기
-	var renderList = function (item) {
-	  var list = document.getElementById("list");
-	  var li = document.createElement("li");
-	  var a = document.createElement("a");
-	  var t = document.createTextNode(item.title + "---" + item.memo);
-	 
-	  a.addEventListener("click", function () {
-	    deleteItem(item.id);
-	  }, false);
-	 
-	  a.textContent = " [x]";
-	  li.appendChild(t);
-	  li.appendChild(a);
-	  list.appendChild(li)
-	};
-	 
-	 
-	 
-	db.onReady(function() {
-	  getAllItems();
-	});
-	 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
  
-</script>
- 
+  <title>IndexedDB ToDo Example</title>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+  <script>
+      var dbName = "todo";
+      var dbVersion = 1.0;
+      var todoDB = {};
+      var indexedDB = window.indexedDB || 
+        window.webkitIndexedDB ||
+        window.mozIndexedDB;
+      if ('webkitIndexedDB' in window) {
+        window.IDBTransaction = window.webkitIDBTransaction;
+        window.IDBKeyRange = window.webkitIDBKeyRange;
+      }
+      todoDB.indexedDB = {};
+      todoDB.indexedDB.db = null;
+     
+      $(document).bind('pageinit', function() {
+        console.log("-- lets start the party --");
+        todoDB.indexedDB.open();
+        $("#addItem").click(function() {
+          addTodo();
+        });
+      });
+      todoDB.indexedDB.onerror = function(e) {
+        console.log(e);
+      };
+      todoDB.indexedDB.open = function() {
+        var request = indexedDB.open(dbName, dbVersion);
+        request.onsuccess = function(e) {
+          console.log ("success our DB: " + dbName);
+          todoDB.indexedDB.db = e.target.result;
+          var db = todoDB.indexedDB.db;
+          if (db.setVersion) {
+            console.log("in old hack checking for DB inside setVersion: " + db.setVersion);
+              if (db.version != dbVersion) {
+                  var req = db.setVersion(dbVersion);
+                  req.onsuccess = function () {
+                    if(db.objectStoreNames.contains("todo")) {
+                      db.deleteObjectStore("todo");
+                    }
+                    var store = db.createObjectStore("todo", 
+                       {keyPath: "timeStamp"});
+                    var trans = req.result;
+                    trans.oncomplete = function(e) {
+                      console.log("== oncomplete transaction ==");
+                      todoDB.indexedDB.getAllTodoItems();
+                    }
+                  };
+              }
+              else {
+                  todoDB.indexedDB.getAllTodoItems();
+              }
+          }
+          else {
+              todoDB.indexedDB.getAllTodoItems();
+          }
+        }
+        
+        request.onupgradeneeded = function(e) {
+          console.log ("Going to upgrade our DB");
+          todoDB.indexedDB.db = e.target.result;
+          var db = todoDB.indexedDB.db;
+          if(db.objectStoreNames.contains("todo")) {
+            db.deleteObjectStore("todo");
+          }
+          var store = db.createObjectStore("todo",
+                      {keyPath: "timeStamp"});
+          todoDB.indexedDB.getAllTodoItems();
+        }
+     
+        request.onfailure = todoDB.indexedDB.onerror;
+        request.onerror = function(e) {
+          console.error("Err:"+e);
+        }
+      };
+      todoDB.indexedDB.addTodo = function(todoText) {
+        var db = todoDB.indexedDB.db;
+        var trans = db.transaction(['todo'], "readwrite");
+        var store = trans.objectStore("todo");
+        var data = {
+          "text": todoText,
+          "timeStamp": new Date().getTime()
+        };
+        var request = store.put(data);
+        request.onsuccess = function(e) {
+          todoDB.indexedDB.getAllTodoItems();
+        };
+        request.onerror = function(e) {
+          console.error("Error Adding an item: ", e);
+        };
+      };
+      todoDB.indexedDB.deleteTodo = function(id) {
+        var db = todoDB.indexedDB.db;
+        var trans = db.transaction(["todo"], "readwrite");
+        var store = trans.objectStore("todo");
+        var request = store.delete(id);
+        request.onsuccess = function(e) {
+          todoDB.indexedDB.getAllTodoItems();
+        };
+        request.onerror = function(e) {
+          console.error("Error deleteing: ", e);
+        };
+      };
+      todoDB.indexedDB.getAllTodoItems = function() {
+        var todos = document.getElementById("todoItems");
+        todos.innerHTML = "";
+        var db = todoDB.indexedDB.db;
+        var trans = db.transaction(["todo"], "readwrite");
+        var store = trans.objectStore("todo");
+        // Get everything in the store;
+        var keyRange = IDBKeyRange.lowerBound(0);
+        var cursorRequest = store.openCursor(keyRange);
+        cursorRequest.onsuccess = function(e) {
+          var result = e.target.result;
+          if(!!result == false)
+            return;
+          renderTodo(result.value);
+          result.continue();
+        };
+        cursorRequest.onerror = todoDB.indexedDB.onerror;
+      };
+      function renderTodo(row) {
+        var todos = document.getElementById("todoItems");
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        var t = document.createTextNode(row.text);
+        a.addEventListener("click", function() {
+          todoDB.indexedDB.deleteTodo(row.timeStamp);
+        }, false);
+        // some fun with jquery mobile data attributes
+        a.setAttribute("href", "#");
+        a.setAttribute("data-iconpos", "notext");
+        a.setAttribute("data-role", "button");
+        a.setAttribute("data-icon", "delete"); 
+        a.setAttribute("data-inline", "true");
+        
+        li.appendChild(a);
+        li.appendChild(t);
+        todos.appendChild(li)
+        // And lets create the new il item with its markup
+        $("#todoItems").trigger('create'); 
+      }
+      // Add an item only if we have more then zero letters
+      function addTodo() {
+        var todo = document.getElementById("todo");
+        if (todo.value.length > 0) {
+          todoDB.indexedDB.addTodo(todo.value);
+          todo.value = "";
+        }  
+      }
+    
+      </script>
 </head>
 <body>
-<h2>DB Example</h2>
-<div>
-	<p><input type="text" name="title" placeholder="title"></p>
-	<p><input type="text" name="memo" placeholder="memo"></p>
-	<p><input type="button" name="add" value="add" onclick="addItem();">
-</div>
- 
-<div class="list">
-	<ul id="list">
-	</ul>
-</div>
- 
- 
+  <div data-role="page" data-content-theme="e">
+    <div data-role="header">
+      <h1>IndexedDB with JQM</h1>
+    </div>
+    <div data-role="content">
+      <p>
+        <input type="text" id="todo" name="todo" 
+               placeholder="What do you need to do?" />
+        <input type="submit" value="Add Todo Item"  
+               id="addItem" />
+      </p>
+      <ul id="todoItems" data-role="listview" 
+          data-inset="true" data-filter="true"></ul>
+    </div>
+  </div>
 </body>
 </html>

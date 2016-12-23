@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+	<script src="/front/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
+	//스키마를 정의 해둠
+	var schema = {
+		version:1,
+		autoSchema:false,
+		stores:[{
+			name:"indexedDb",
+			keyPath:"id",
+			autoIncrement:true,
+			indexes:[
+				{name:'title'},
+				{name:'memo'},
+				{name:'date'}
+			]
+		}]
+	};
+	 
+	var db = new db.Storage('indexedDb', schema);
+	 
+	 
+	var addItem = function () {
+	 
+		var data = {
+			"title":$("input[name=title]").val(),
+			"memo":$("input[name=memo]").val(),
+			"date":Date()
+		};
+	 
+		db.put('indexedDb', data).fail(function(e) {
+			console.error(e);
+		});
+	 
+		getAllItems();
+	 
+		$("input[name=title]").val("");
+		$("input[name=memo]").val("");
+	};
+	 
+	//삭제
+	var deleteItem = function (id) {
+	  db.remove('indexedDb', id).fail(function(e) {
+	    console.error(e);
+	  });
+	 
+	  getAllItems();
+	};
+	 
+	 
+	//전체 가져오기
+	var getAllItems = function () {
+	  $("#list li").remove();
+	  var df = db.values('indexedDb');
+	 
+	  df.done(function (items) {
+	    var n = items.length;
+	    for (var i = 0; i < n; i++) {
+	      console.log(items[i]);
+		  renderList(items[i]);
+		}
+	  });
+	 
+	  df.fail(function (e) {
+	    console.error(e);
+	  });
+	};
+	 
+	//화면에 그리기
+	var renderList = function (item) {
+	  var list = document.getElementById("list");
+	  var li = document.createElement("li");
+	  var a = document.createElement("a");
+	  var t = document.createTextNode(item.title + "---" + item.memo);
+	 
+	  a.addEventListener("click", function () {
+	    deleteItem(item.id);
+	  }, false);
+	 
+	  a.textContent = " [x]";
+	  li.appendChild(t);
+	  li.appendChild(a);
+	  list.appendChild(li)
+	};
+	 
+	 
+	 
+	db.onReady(function() {
+	  getAllItems();
+	});
+	 
+ 
+</script>
+ 
+</head>
+<body>
+<h2>DB Example</h2>
+<div>
+	<p><input type="text" name="title" placeholder="title"></p>
+	<p><input type="text" name="memo" placeholder="memo"></p>
+	<p><input type="button" name="add" value="add" onclick="addItem();">
+</div>
+ 
+<div class="list">
+	<ul id="list">
+	</ul>
+</div>
+ 
+ 
+</body>
+</html>

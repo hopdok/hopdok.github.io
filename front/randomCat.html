@@ -118,14 +118,13 @@
 
 	function viewImage( randomId )
 	{
-	randomId++;
-	if( randomId == images.length ) randomId = 0; // 랜덤값이 배열 크기와 같을 경우 가장 처음 이미지..
-	image.innerHTML = images[ randomId ]; // 이미지 출력
-	//setTimeout( "viewImage(" + randomId + ")", refreshTime ); // 1초마다 이미지 갱신
+		randomId++;
+		if( randomId == images.length ) randomId = 0; // 랜덤값이 배열 크기와 같을 경우 가장 처음 이미지..
+		image.innerHTML = images[ randomId ]; // 이미지 출력
 	}
 
 	$(document).ready(function () {
-		
+		outRandomImage();
 		$("#btn").click(function(){
 			outRandomImage();
 		})
@@ -137,6 +136,6 @@
 <body>
 <!-- 링크된 이미지 추출할 부분 -->
 <div id="image" style="width:70%"></div>
-<div id="btn" style="background-color: purple;">랜덤플레이</div>
+<span id="btn" style="background-color: purple; color: white;">랜덤플레이</spans>
 </body>
 </html>

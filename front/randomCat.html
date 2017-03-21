@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>랜덤 이미지 출력( 출력한 후 나머지 출력 )</title>
+<META http-equiv="content-type" content="text/html; charset=euc-kr">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+<script>
+	var images =[];
+	
+	function outRandomImage()
+	{
+		images = [
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_1.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_2.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_3.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_4.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_5.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_6.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_7.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_8.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_9.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_10.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_11.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_12.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_13.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_14.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_15.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_16.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_17.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_18.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_19.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_20.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_21.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_22.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_23.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_24.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_25.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_26.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_27.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_28.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_29.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_30.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_31.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_32.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_33.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_34.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_35.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_36.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_37.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_38.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_39.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_40.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_41.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_42.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_43.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_44.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_45.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_46.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_47.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_48.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_49.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_50.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_51.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_52.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_53.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_54.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_55.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_56.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_57.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_58.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_59.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_60.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_61.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_62.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_63.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_64.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_65.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_66.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_67.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_68.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_69.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_70.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_71.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_72.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_73.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_74.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_75.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_76.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_77.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_78.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_79.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_80.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_81.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_82.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_83.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_84.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_85.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_86.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_87.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_88.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_89.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_90.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_91.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_92.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_93.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_94.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_95.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_96.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_97.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_98.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_99.gif'	border ='0'></A>",
+			"<A href ='#'><img src='https://hopdok.github.io/cat_image/cat_100.gif'	border ='0'></A>"
+					]
+		
+		randomId = Math.floor( Math.random() * images.length ); // 랜덤 값 추출
+		viewImage( randomId ); // viewImage 호출
+	}
+
+	function viewImage( randomId )
+	{
+	randomId++;
+	if( randomId == images.length ) randomId = 0; // 랜덤값이 배열 크기와 같을 경우 가장 처음 이미지..
+	image.innerHTML = images[ randomId ]; // 이미지 출력
+	//setTimeout( "viewImage(" + randomId + ")", refreshTime ); // 1초마다 이미지 갱신
+	}
+
+	$(document).ready(function () {
+		
+		$("#btn").click(function(){
+			outRandomImage();
+		})
+	});
+	
+
+</script>
+</head>
+<body>
+<!-- 링크된 이미지 추출할 부분 -->
+<div id="image" style="width:70%"></div>
+<div id="btn" style="background-color: purple;">랜덤플레이</div>
+</body>
+</html>

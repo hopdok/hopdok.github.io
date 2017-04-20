@@ -1,10 +1,10 @@
 <META http-equiv="content-type" content="text/html; charset=euc-kr">
 <html>
 <head>
-<title>ºÒ·®È­¼Ò Ã¼Å©</title>
+<title>ë¶ˆëŸ‰í™”ì†Œ ì²´í¬</title>
 	
 </head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> 
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 
 <script>
 var colors =[];
@@ -13,13 +13,13 @@ var randomId = "";
 	{
 		colors = ["white", "black", "blue", "purple", "yelow", "green"]
 		
-		randomId = Math.floor( Math.random() * colors.length ); // ·£´ı °ª ÃßÃâ
-		viewColor( randomId ); // viewImage È£Ãâ
+		randomId = Math.floor( Math.random() * colors.length ); // ëœë¤ ê°’ ì¶”ì¶œ
+		viewColor( randomId ); // viewImage í˜¸ì¶œ
 	}
 	function viewColor( randomId )
 	{
 		randomId++;
-		if( randomId == colors.length ) randomId = 0; // ·£´ı°ªÀÌ ¹è¿­ Å©±â¿Í °°À» °æ¿ì °¡Àå Ã³À½ ÀÌ¹ÌÁö..
+		if( randomId == colors.length ) randomId = 0; // ëœë¤ê°’ì´ ë°°ì—´ í¬ê¸°ì™€ ê°™ì„ ê²½ìš° ê°€ì¥ ì²˜ìŒ ì´ë¯¸ì§€..
 		$("body").css("background-color",colors[randomId]);
 	}
 

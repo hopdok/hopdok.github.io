@@ -1,0 +1,36 @@
+<META http-equiv="content-type" content="text/html; charset=euc-kr">
+<html>
+<head>
+<title>불량화소 체크</title>
+	
+</head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> 
+
+<script>
+var colors =[];
+var randomId = "";
+	function outRandomColor()
+	{
+		colors = ["white", "black", "blue", "purple", "yelow", "green"]
+		
+		randomId = Math.floor( Math.random() * colors.length ); // 랜덤 값 추출
+		viewColor( randomId ); // viewImage 호출
+	}
+	function viewColor( randomId )
+	{
+		randomId++;
+		if( randomId == colors.length ) randomId = 0; // 랜덤값이 배열 크기와 같을 경우 가장 처음 이미지..
+		$("body").css("background-color",colors[randomId]);
+	}
+
+	$(document).ready(function () {
+		$("body").on("click",function(){
+			outRandomColor();
+		})
+	});
+	
+
+</script>
+<body style="background-color: red;">
+</body>   
+</html>

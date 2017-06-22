@@ -1,23 +1,23 @@
 <META http-equiv="content-type" content="text/html; charset=euc-kr">
 <html>
 <head>
-<title>�ּҺ�ȯ��</title>
+<title>주소변환기</title>
 	
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> 
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script>
-    //load�Լ��� �̿��Ͽ� core��ũ��Ʈ�� �ε��� �Ϸ�� ��, ������ȣ ���񽺸� �����մϴ�.
+    //load함수를 이용하여 core스크립트의 로딩이 완료된 후, 우편번호 서비스를 실행합니다.
     daum.postcode.load(function(){
         new daum.Postcode({
             oncomplete: function(data) {
-                // �˾����� �˻���� �׸��� Ŭ�������� ������ �ڵ带 �ۼ��ϴ� �κ��Դϴ�.
-                // ������ �����Ͽ� �پ��� Ȱ����� Ȯ���� ������.
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
             }
         }).open();
     });
 </script>
-<body style="background-color: red;">
+<body >
 </body>   
 </html>

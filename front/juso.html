@@ -10,6 +10,8 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script> 
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
+
 <!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
 <script>
     // 우편번호 찾기 찾기 화면을 넣을 element
@@ -21,6 +23,7 @@
         var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
         new daum.Postcode({
             oncomplete: function(data) {
+            	 alert(data);
                 // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
@@ -40,13 +43,15 @@
                     fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
                 }
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample3_postcode').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('sample3_address').value = fullAddr;
+                //document.getElementById('sample3_postcode').value = data.zonecode; //5자리 새우편번호 사용
+                //document.getElementById('sample3_address').value = fullAddr;
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                element_wrap.style.display = 'none';
+                //element_wrap.style.display = 'none';
                 // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
-                document.body.scrollTop = currentScroll;
+                //document.body.scrollTop = currentScroll;
+               
+                CopyToClipboard (fullAddr)
             },
             // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
             onresize : function(size) {
@@ -55,8 +60,56 @@
             width : '100%',
             height : '100%'
         }).embed(element_wrap);
- element_wrap.style.display = 'block';
+ 		element_wrap.style.display = 'block';
     }
+    
+    function CopyToClipboard (_txt){ 
+
+alert(_txt);
+        var textToClipboard = _txt;
+
+        var success = false; 
+
+        if ( window.clipboardData ){ 
+                window.clipboardData.setData ( "Text", textToClipboard ); 
+                success = true; 
+        } 
+        else { 
+
+                var rangeToSelect = document.createRange(); 
+
+                rangeToSelect.selectNodeContents( textToClipboard ); 
+
+                var selection = window.getSelection(); 
+                selection.removeAllRanges(); 
+                selection.addRange( rangeToSelect ); 
+
+                success = true; 
+
+                try { 
+                    if ( window.netscape && (netscape.security && netscape.security.PrivilegeManager) ){ 
+                        netscape.security.PrivilegeManager.enablePrivilege( "UniversalXPConnect" ); 
+                    } 
+
+                    success = document.execCommand( "copy", false, null ); 
+                } 
+                catch ( error ){ 
+                    success = false; 
+                    console.log( error ); 
+                } 
+        } 
+
+
+        if ( success ){ alert( ' 립보드에 복사되었습니다.' ); } 
+        else {    alert( " 복사하지 못했습니다. " );    } 
+
+        /* 
+        if ( success ){    alert( ' The texts were copied to clipboard. \n\n Paste it, using "Ctrl + v". \n ' );    } 
+        else {    alert( " It was failed to copy. \n " );    } 
+        */ 
+	} 
+
+    
 	sample3_execDaumPostcode();
 </script>
 </body>   

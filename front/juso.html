@@ -54,38 +54,31 @@
             onresize : function(size) {
                 element_wrap.style.height = size.height+'px';
             },
+		autoClose: false, //기본값 true
             width : '100%',
             height : '100%'
-        });
+        }).embed(element_wrap);
  		element_wrap.style.display = 'block';
     }
     
     function CopyToClipboard (_txt){ 
-
         var textToClipboard = _txt;
-
         var success = false; 
         if ( window.clipboardData ){ 
                 window.clipboardData.setData ( "Text", textToClipboard ); 
                 success = true; 
         } 
         else { 
-
                 var rangeToSelect = document.createRange(); 
-
                 rangeToSelect.selectNodeContents( textToClipboard ); 
-
                 var selection = window.getSelection(); 
                 selection.removeAllRanges(); 
                 selection.addRange( rangeToSelect ); 
-
                 success = true; 
-
                 try { 
                     if ( window.netscape && (netscape.security && netscape.security.PrivilegeManager) ){ 
                         netscape.security.PrivilegeManager.enablePrivilege( "UniversalXPConnect" ); 
                     } 
-
                     success = document.execCommand( "copy", false, null ); 
                 } 
                 catch ( error ){ 
@@ -93,17 +86,14 @@
                     console.log( error ); 
                 } 
         } 
-
 alert(success)
         if ( success ){ alert( ' 클립보드에 복사되었습니다.' ); } 
         else {    alert( " 복사하지 못했습니다. " );    } 
-
         /* 
         if ( success ){    alert( ' The texts were copied to clipboard. \n\n Paste it, using "Ctrl + v". \n ' );    } 
         else {    alert( " It was failed to copy. \n " );    } 
         */ 
 	} 
-
     
 	sample3_execDaumPostcode();
 </script>

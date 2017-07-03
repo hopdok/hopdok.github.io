@@ -47,28 +47,30 @@
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
                
- 				//element_wrap.style.display = 'block';
+ 			
                 CopyToClipboard (fullAddr)
+            	element_wrap.style.display = 'block';
+                return;
             },
             // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
             onresize : function(size) {
                 element_wrap.style.height = size.height+'px';
             },
-		autoClose: false, //기본값 true
+            autoClose: false,
             width : '100%',
             height : '100%'
-        }).embed(element_wrap);
+        });
  		element_wrap.style.display = 'block';
     }
-    
-	function CopyToClipboard (link){ 
-	       if( window.clipboardData ) {
-		    window.clipboardData.setData('Text', link);
-		    alert("주소를 클립보드에 복사하였습니다.");
-		} else {
-		    prompt("Ctrl + c 를 눌러 클립보드로 복사하세요", link);
-		}
+    function CopyToClipboard (link){ 
+	   	 if( window.clipboardData ) {
+            window.clipboardData.setData('Text', link);
+            alert("주소를 클립보드에 복사하였습니다.");
+        } else {
+            prompt("Ctrl + c 를 눌러 클립보드로 복사하세요", link);
+        }
 	} 
+
     
 	sample3_execDaumPostcode();
 </script>

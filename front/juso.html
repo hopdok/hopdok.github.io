@@ -61,13 +61,38 @@
  		element_wrap.style.display = 'block';
     }
     
-	function CopyToClipboard (link){ 
-		if( window.clipboardData ) {
-		    window.clipboardData.setData('Text', link);
-		    alert("주소를 클립보드에 복사하였습니다.");
-		} else {
-		    prompt("Ctrl + c 를 눌러 클립보드로 복사하세요", link);
-		}
+    function CopyToClipboard (_txt){ 
+        var textToClipboard = _txt;
+        var success = false; 
+        if ( window.clipboardData ){ 
+                window.clipboardData.setData ( "Text", textToClipboard ); 
+                success = true; 
+        } 
+        else { 
+                var rangeToSelect = document.createRange(); 
+                rangeToSelect.selectNodeContents( textToClipboard ); 
+                var selection = window.getSelection(); 
+                selection.removeAllRanges(); 
+                selection.addRange( rangeToSelect ); 
+                success = true; 
+                try { 
+                    if ( window.netscape && (netscape.security && netscape.security.PrivilegeManager) ){ 
+                        netscape.security.PrivilegeManager.enablePrivilege( "UniversalXPConnect" ); 
+                    } 
+                    success = document.execCommand( "copy", false, null ); 
+                } 
+                catch ( error ){ 
+                    success = false; 
+                    console.log( error ); 
+                } 
+        } 
+alert(success)
+        if ( success ){ alert( ' 클립보드에 복사되었습니다.' ); } 
+        else {    alert( " 복사하지 못했습니다. " );    } 
+        /* 
+        if ( success ){    alert( ' The texts were copied to clipboard. \n\n Paste it, using "Ctrl + v". \n ' );    } 
+        else {    alert( " It was failed to copy. \n " );    } 
+        */ 
 	} 
     
 	sample3_execDaumPostcode();

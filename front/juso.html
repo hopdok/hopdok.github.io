@@ -47,7 +47,7 @@
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
                
- 				element_wrap.style.display = 'block';
+ 				//element_wrap.style.display = 'block';
                 CopyToClipboard (fullAddr)
             },
             // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
@@ -61,38 +61,13 @@
  		element_wrap.style.display = 'block';
     }
     
-    function CopyToClipboard (_txt){ 
-        var textToClipboard = _txt;
-        var success = false; 
-        if ( window.clipboardData ){ 
-                window.clipboardData.setData ( "Text", textToClipboard ); 
-                success = true; 
-        } 
-        else { 
-                var rangeToSelect = document.createRange(); 
-                rangeToSelect.selectNodeContents( textToClipboard ); 
-                var selection = window.getSelection(); 
-                selection.removeAllRanges(); 
-                selection.addRange( rangeToSelect ); 
-                success = true; 
-                try { 
-                    if ( window.netscape && (netscape.security && netscape.security.PrivilegeManager) ){ 
-                        netscape.security.PrivilegeManager.enablePrivilege( "UniversalXPConnect" ); 
-                    } 
-                    success = document.execCommand( "copy", false, null ); 
-                } 
-                catch ( error ){ 
-                    success = false; 
-                    console.log( error ); 
-                } 
-        } 
-alert(success)
-        if ( success ){ alert( ' 클립보드에 복사되었습니다.' ); } 
-        else {    alert( " 복사하지 못했습니다. " );    } 
-        /* 
-        if ( success ){    alert( ' The texts were copied to clipboard. \n\n Paste it, using "Ctrl + v". \n ' );    } 
-        else {    alert( " It was failed to copy. \n " );    } 
-        */ 
+	function CopyToClipboard (link){ 
+	       if( window.clipboardData ) {
+		    window.clipboardData.setData('Text', link);
+		    alert("주소를 클립보드에 복사하였습니다.");
+		} else {
+		    prompt("Ctrl + c 를 눌러 클립보드로 복사하세요", link);
+		}
 	} 
     
 	sample3_execDaumPostcode();

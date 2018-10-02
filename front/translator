@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>번역기</title>
+	
+</head>
+<body >
+<div id="wrap" style="display:none;border:1px solid;margin:5px 0;position:relative">
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script> 
+<script>
+
+</script>
+</body>   
+</html>
